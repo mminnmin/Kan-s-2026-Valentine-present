@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jann's Valentine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .cursive { 
+            font-family: 'Dancing Script', cursive; 
+            line-height: 1.4; 
+            padding-top: 0.1em;
+            padding-bottom: 0.1em;
+            text-shadow: none !important; /* Remove any default outlines/shadows for a cleaner look */
+        }
+        body { font-family: 'Inter', sans-serif; overflow: hidden; background-color: #FFC5D3; margin: 0; }
+        .chinese { font-family: 'Noto Sans SC', sans-serif; }
+        
+        /* Aggressive Global Emoji/Decoration Styling: Ensures a completely flat, outline-free look */
+        .emoji-no-outline, .decoration {
+            text-shadow: none !important;
+            -webkit-text-stroke: 0px !important;
+            outline: none !important;
+            filter: none !important;
+            box-shadow: none !important;
+        }
+
+        .soft-border {
+            border: 4px solid rgba(255, 255, 255, 0.3); /* Thinner, softer border */
+            border-radius: 40px;
+            pointer-events: none;
+            position: fixed;
+            inset: 12px;
+            z-index: 1000;
+        }
+
+        .border-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        @keyframes floating-heart {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.3; }
+            80% { opacity: 0.3; }
+            100% { transform: translate(var(--tw-translate-x), -100vh) scale(1.2); opacity: 0; }
+        }
+
+        .border-heart-particle {
+            position: absolute;
+            bottom: -30px;
+            width: 16px;
+            height: 16px;
+            animation: floating-heart 12s linear infinite;
+            filter: grayscale(0);
+        }
+
+        @keyframes float-heart-single {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-120px) scale(1.6); opacity: 0; }
+        }
+        .animate-heart { animation: float-heart-single 1.5s ease-out forwards; }
+
+        @keyframes rabbit-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+        .animate-rabbit { animation: rabbit-fall 3s ease-in forwards; position: fixed; top: 0; z-index: 3000; pointer-events: none; font-size: 32px; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 183, 197, 0.4); border-radius: 10px; }
+
+        .no-scroll { overflow: hidden; height: 100vh; width: 100vw; }
+        
+        /* Floating decoration elements */
+        .decoration { position: absolute; pointer-events: none; z-index: 5; opacity: 0.4; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+</head>
+<body class="no-scroll">
+    <div id="root" class="h-full w-full"></div>
+    <div class="soft-border"></div>
+    <div class="border-hearts" id="border-hearts"></div>
+    <script>
+        const container = document.getElementById('border-hearts');
+        const heartCount = 15;
+        // Use the Apple Growing Heart (💗) for a consistent flat aesthetic
+        const heartEmojiUrl = `https://emojicdn.elk.sh/💗?style=apple`;
+
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('img');
+            heart.src = heartEmojiUrl;
+            heart.className = 'border-heart-particle emoji-no-outline';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 12 + 's';
+            heart.style.setProperty('--tw-translate-x', (Math.random() * 150 - 75) + 'px');
+            container.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
